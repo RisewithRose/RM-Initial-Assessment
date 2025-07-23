@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rose Method Assessment</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; background: #f8f9fa; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #d63384; text-align: center; margin-bottom: 30px; }
+        .question { margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; }
+        .question h3 { color: #333; margin-bottom: 15px; }
+        .option { margin-bottom: 10px; padding: 10px; background: white; border-radius: 5px; cursor: pointer; border: 2px solid #e9ecef; }
+        .option:hover { border-color: #d63384; }
+        .option input { margin-right: 10px; }
+        button { background: #d63384; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; margin-top: 20px; }
+        button:hover { background: #b02a5b; }
+        .results { display: none; padding: 20px; border-radius: 8px; margin-top: 20px; }
+        .crisis { background: #f8d7da; border: 2px solid #dc3545; color: #721c24; }
+        .led-by-love { background: #fff3cd; border: 2px solid #ffc107; color: #856404; }
+        .combination { background: #d1ecf1; border: 2px solid #17a2b8; color: #0c5460; }
+        .rose-method { background: #d4edda; border: 2px solid #28a745; color: #155724; }
+        .advanced { background: #e2e3f0; border: 2px solid #6f42c1; color: #493057; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌹 Rose Method Readiness Assessment</h1>
+        
+        <form id="assessment">
+            <div class="question">
+                <h3>1. What's your primary focus right now?</h3>
+                <div class="option"><input type="radio" name="q1" value="1"> I'm in crisis and need immediate support</div>
+                <div class="option"><input type="radio" name="q1" value="2"> I'm working through trauma or addiction</div>
+                <div class="option"><input type="radio" name="q1" value="4"> I'm healing wounds and building self-worth</div>
+                <div class="option"><input type="radio" name="q1" value="8"> I'm ready to create a bigger version of myself</div>
+                <div class="option"><input type="radio" name="q1" value="10"> I'm embodying my highest potential</div>
+            </div>
+
+            <div class="question">
+                <h3>2. How stable is your life currently?</h3>
+                <div class="option"><input type="radio" name="q2" value="1"> In active crisis</div>
+                <div class="option"><input type="radio" name="q2" value="2"> Major disruption in last 3 months</div>
+                <div class="option"><input type="radio" name="q2" value="4"> Some instability but managing</div>
+                <div class="option"><input type="radio" name="q2" value="7"> Generally stable with normal challenges</div>
+                <div class="option"><input type="radio" name="q2" value="10"> Very stable and thriving</div>
+            </div>
+
+            <div class="question">
+                <h3>3. What describes your relationship situation?</h3>
+                <div class="option"><input type="radio" name="q3" value="2"> Single, struggling with severe self-worth issues</div>
+                <div class="option"><input type="radio" name="q3" value="4"> Single, working on self-worth and boundaries</div>
+                <div class="option"><input type="radio" name="q3" value="4"> In relationship, struggling with boundaries</div>
+                <div class="option"><input type="radio" name="q3" value="7"> In relationship, healthy but ready for growth</div>
+                <div class="option"><input type="radio" name="q3" value="10"> Confident in self-worth, ready for expansion</div>
+            </div>
+
+            <div class="question">
+                <h3>4. How comfortable are you with your voice?</h3>
+                <div class="option"><input type="radio" name="q4" value="2"> I hate my voice and rarely speak up</div>
+                <div class="option"><input type="radio" name="q4" value="3"> Very shy and uncomfortable</div>
+                <div class="option"><input type="radio" name="q4" value="5"> Working on finding my voice</div>
+                <div class="option"><input type="radio" name="q4" value="7"> Fairly comfortable expressing myself</div>
+                <div class="option"><input type="radio" name="q4" value="10"> Love my voice and curious about transformation</div>
+            </div>
+
+            <div class="question">
+                <h3>5. How ready are you for daily practice?</h3>
+                <div class="option"><input type="radio" name="q5" value="1"> Can't commit to anything right now</div>
+                <div class="option"><input type="radio" name="q5" value="2"> Struggle with consistency</div>
+                <div class="option"><input type="radio" name="q5" value="4"> Working on building better habits</div>
+                <div class="option"><input type="radio" name="q5" value="7"> Generally good at following through</div>
+                <div class="option"><input type="radio" name="q5" value="10"> Excited about daily practice</div>
+            </div>
+
+            <button type="button" onclick="calculateResults()">Get My Results</button>
+        </form>
+
+        <div id="results" class="results">
+            <h2 id="resultTitle"></h2>
+            <p id="resultDescription"></p>
+            <div id="nextSteps"></div>
+            <button onclick="resetAssessment()">Take Assessment Again</button>
+        </div>
+    </div>
+
+    <script>
+        function calculateResults() {
+            const form = document.getElementById('assessment');
+            const formData = new FormData(form);
+            let total = 0;
+            let answered = 0;
+
+            // Calculate total score
+            for (let [name, value] of formData.entries()) {
+                total += parseInt(value);
+                answered++;
+            }
+
+            // Check if all questions answered
+            if (answered < 5) {
+                alert('Please answer all questions before getting results.');
+                return;
+            }
+
+            // Hide form and show results
+            form.style.display = 'none';
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+
+            // Determine recommendation
+            let title, description, nextSteps, className;
+
+            if (total <= 17) {
+                className = 'crisis';
+                title = 'Crisis Support Needed';
+                description = 'You\'re dealing with significant challenges that require immediate professional support. Please reach out to appropriate crisis resources.';
+                nextSteps = '<strong>Immediate Action:</strong><br>• National Suicide Prevention Lifeline: 988<br>• Crisis counseling or psychiatric support<br>• 12-Step Programs if addiction is present<br>• Focus on stabilization first';
+            } else if (total <= 29) {
+                className = 'led-by-love';
+                title = 'Led by Love Program Recommended';
+                description = 'You\'re in a beautiful place of growth and healing. Led by Love will give you the foundation of self-worth and emotional mastery.';
+                nextSteps = '<strong>Perfect For:</strong><br>• Single women working on self-worth<br>• Women in relationships struggling with boundaries<br>• Rewritten Inner Script work<br>• Emotional Mastery training<br>• Black Belt Boundaries<br><br><strong>Next:</strong> Application links will be available here soon.';
+            } else if (total <= 39) {
+                className = 'combination';
+                title = 'Combination Approach Recommended';
+                description = 'You\'re ready for growth work and have great potential for the Rose Method. Starting with foundation building will ensure sustainable transformation.';
+                nextSteps = '<strong>Recommended Path:</strong><br>• Start with Led by Love (3-6 months)<br>• Transition to Rose Method with modifications<br>• Extra nervous system support<br>• Slower pacing for integration<br><br><strong>Next:</strong> Application links will be available here soon.';
+            } else if (total <= 47) {
+                className = 'rose-method';
+                title = 'Rose Method Ready!';
+                description = 'You\'re beautifully aligned for the Rose Method! Your readiness for identity creation work makes you an ideal candidate for consciousness-based transformation.';
+                nextSteps = '<strong>Rose Method Phases:</strong><br>• REVEAL: AI Oracle prophetic fiction<br>• ORACLE: Voice embodiment mastery<br>• SPEAK: Neural pathway installation<br>• EMBODY: Living integration<br><br><strong>Next:</strong> Application links will be available here soon.';
+            } else {
+                className = 'advanced';
+                title = 'Advanced Readiness';
+                description = 'You\'re operating at a high level of consciousness. The Rose Method will be transformative personally and potentially prepare you to guide others.';
+                nextSteps = '<strong>Advanced Options:</strong><br>• Full Rose Method program<br>• Facilitator training track<br>• Consciousness research participation<br>• Leadership preparation<br><br><strong>Next:</strong> Application links will be available here soon.';
+            }
+
+            // Update results display
+            resultsDiv.className = `results ${className}`;
+            document.getElementById('resultTitle').textContent = `${title} (Score: ${total}/50)`;
+            document.getElementById('resultDescription').textContent = description;
+            document.getElementById('nextSteps').innerHTML = nextSteps;
+        }
+
+        function resetAssessment() {
+            document.getElementById('assessment').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('assessment').reset();
+        }
+    </script>
+</body>
+</html>
